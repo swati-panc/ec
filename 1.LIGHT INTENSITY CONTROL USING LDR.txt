@@ -1,0 +1,172 @@
+1.LIGHT INTENSITY CONTROL USING LDR AND PWM WITH ARDUINO UNO
+int LSV=0;
+void setup()
+  {   pinMode(A3,INPUT);   
+      pinMode(9,OUTPUT);
+      Serial.begin(9600); } 
+void loop(){
+      LSV=analogRead(A3);
+      Serial.println(LSV); 
+      int ledBrightness=map(LSV,0,1023,0,255);
+      analogWrite(9,ledBrightness);
+      delay(200); } 
+
+
+2.INTERFACING A GAS/SMOKE SENSOR AND LED WITH ARDUINO
+int smoke = 33;
+int sensor = 0; 
+void setup() {   
+       pinMode(A3, OUTPUT);   
+       pinMode(A2, INPUT);   
+       Serial.begin(9600); }  
+void loop() {   
+       sensor = analogRead(A2);    
+       if (sensor >= smoke) 
+              {     digitalWrite(A3, HIGH);     
+                    Serial.println("smoke detected");     
+                    Serial.println(sensor);   }   
+        else {     
+                    digitalWrite(A3, LOW);
+                    Serial.println("smoke detected");   
+                    Serial.println("sensor");   } 
+       delay(100); } 
+
+3.SECURITY SYSTEM USING PIR MOTION SENSOR BUZZER AND LED WITH ARDUINO
+int pir_pin = 2; 
+int led_pin = 13; 
+int buzzer_pin = 9;  
+
+void setup() {   
+  pinMode(pir_pin, INPUT);   
+  pinMode(led_pin, OUTPUT);   
+  pinMode(buzzer_pin, OUTPUT);   
+  Serial.begin(9600); }  
+
+void loop() 
+{   if (digitalRead(pir_pin) == HIGH)   
+    {digitalWrite(led_pin, HIGH);     
+     digitalWrite(buzzer_pin, HIGH);     
+     Serial.println("Detected");   }
+     else { 28;digitalWrite(led_pin, LOW);
+           digitalWrite(buzzer_pin, LOW);     
+           
+           Serial.println("Not Detected");   } }
+
+4.INTERFACING AN ANALOG POTEMTIOMETER AND LED LEVEL INDICATOR WITH ARDUINO
+int potPin = A0;
+
+int ledPins[] = {2, 3, 4, 5, 6};
+
+int potValue = 0;
+int ledLevel = 0;
+
+void setup()
+{
+  Serial.begin(9600);
+
+  for (int i = 0; i < 5; i++)
+  {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
+
+void loop()
+{
+  potValue = analogRead(potPin);
+
+  ledLevel = map(potValue, 0, 1023, 0, 5);
+
+  for (int i = 0; i < 5; i++)
+  {
+    if (i < ledLevel)
+    {
+      digitalWrite(ledPins[i], HIGH);
+    }
+    else
+    {
+      digitalWrite(ledPins[i], LOW);
+    }
+  }
+
+  Serial.print("Potentiometer Value: ");
+  Serial.print(potValue);
+
+  Serial.print(" | LED Level: ");
+  Serial.println(ledLevel);
+
+  delay(100);
+}
+
+
+5.DISTANCE MEASUREMENT USING HC-SRO4 ULTRASONIC SENSOR AND ARDUINO UNO 
+#define trigPin 9
+#define echoPin 10
+
+long duration;
+float distance;
+
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  Serial.begin(9600);
+
+  Serial.println("Ultrasonic Distance Measurement");
+}
+
+void loop()
+{
+  // Clear the trigger pin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  // Send ultrasonic pulse
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Read echo duration
+  duration = pulseIn(echoPin, HIGH);
+
+  // Calculate distance in cm
+  distance = duration * 0.0343 / 2;
+
+  // Display distance
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(500);
+}
+
+6.DISTANCE MEANSUREMENT USING ULTRASONIC SENSOR AND LCD DISPLAY
+#include <LiquidCrystal.h>  
+LiquidCrystal lcd(1, 2, 4, 5, 6, 7); 
+const int trigPin = 9; 
+const int echoPin = 10; 
+long duration; 
+int distanceCm, 
+distanceInch;  
+void setup(){lcd.begin(16, 2);   
+             pinMode(trigPin, OUTPUT);   
+             pinMode(echoPin, INPUT); }
+void loop() {   
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);   
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distanceCm = duration * 0.034 / 2;
+  35;    distanceInch = duration * 0.0133 / 2;
+  lcd.setCursor(0, 0);   
+  lcd.print("Distance: ");   
+  lcd.print(distanceCm);   
+  lcd.print(" CM");   
+  delay(10);    
+  lcd.setCursor(0, 1);   
+  lcd.print("Distance: ");   
+  lcd.print(distanceInch);   
+  lcd.print(" IN");   
+  delay(10); } 
